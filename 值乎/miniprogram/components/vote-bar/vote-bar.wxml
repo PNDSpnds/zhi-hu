@@ -1,0 +1,20 @@
+<view class="vote-bar">
+  <view class="bar-track">
+    <!-- 蓝色：值 -->
+    <view class="bar-value" style="width: {{valuePercent}}%;">
+      <text wx:if="{{valuePercent > 15}}" class="bar-label">{{valuePercent}}% 值</text>
+    </view>
+    <!-- 红色：不值 -->
+    <view class="bar-not-value" style="width: {{notValuePercent}}%;">
+      <text wx:if="{{notValuePercent > 15}}" class="bar-label">{{notValuePercent}}% 不值</text>
+    </view>
+  </view>
+  <!-- 无投票时 -->
+  <view wx:if="{{totalVotes === 0}}" class="bar-empty text-muted text-small">
+    暂无投票
+  </view>
+  <view wx:else class="bar-info flex-between text-small text-muted mt-10">
+    <text class="color-value">{{valueCount}} 人觉得值</text>
+    <text class="color-not-value">{{notValueCount}} 人觉得不值</text>
+  </view>
+</view>

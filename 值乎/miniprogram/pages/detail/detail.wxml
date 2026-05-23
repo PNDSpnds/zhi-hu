@@ -1,0 +1,128 @@
+<!-- pages/detail/detail.wxml — Post Detail Page -->
+<view class="detail-container" wx:if="{{!loading}}">
+
+  <!-- Loading skeleton -->
+  <view wx:if="{{!post}}" class="empty-state">
+    <text class="text-muted">帖子不存在或已被删除</text>
+  </view>
+
+  <block wx:if="{{post}}">
+    <scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+
+      <!-- ===== Post Header ===== -->
+      <view class="post-header">
+        <view class="post-avatar {{post.isAnonymous ? 'avatar-anon' : ''}}">
+          <text>{{post.isAnonymous ? '匿' : post.avatarUrl}}</text>
+        </view>
+        <view class="post-author-info">
+          <view class="post-nickname {{post.isAnonymous ? 'anonymous' : ''}}">
+            {{post.isAnonymous ? '匿名' : post.nickName}}
+          </view>
+          <view class="post-time text-muted">{{post.createdAtText}}</view>
+        </view>
+        <!-- Feedback badge -->
+        <view wx:if="{{post.hasFeedback}}" class="feedback-badge {{post.didBuy ? 'bought' : 'not-bought'}}">
+          <text>{{post.didBuy ? '已买 ✓' : '没买 ✗'}}</text>
+        </view>
+        <!-- Share -->
+        <button class="share-post-btn" open-type="share">
+          <text>分享</text>
+        </button>
+        <!-- Delete (author only) -->
+        <view wx:if="{{isAuthor}}" class="delete-post-btn" bindtap="onDeletePost">
+          <text>删除</text>
+        </view>
+      </view>
+
+      <!-- ===== Score Card (full) ===== -->
+      <view class="score-section">
+        <score-card
+          score="{{post.score}}"
+          conclusion="{{post.conclusion}}"
+          item-name="{{post.itemName}}"
+          dimension-scores="{{post.dimensionScores}}"
+          compact="{{false}}"
+        />
+      </view>
+
+      <!-- ===== Item Name ===== -->
+      <view class="detail-item-name">{{post.itemName}}</view>
+
+      <!-- ===== Description ===== -->
+      <view wx:if="{{post.description}}" class="detail-desc">
+        <text>{{post.description}}</text>
+      </view>
+
+      <!-- ===== Image ===== -->
+      <view wx:if="{{post.imageUrl}}" class="detail-image-wrap" bindtap="onPreviewImage">
+        <image class="detail-image" src="{{post.imageUrl}}" mode="widthFix" />
+      </view>
+
+      <!-- ===== Vote Section ===== -->
+      <view class="vote-section">
+        <view class="section-title">投票</view>
+        <vote-bar value-count="{{post.valueCount}}" not-value-count="{{post.notValueCount}}" />
+
+        <view wx:if="{{hasVoted}}" class="voted-notice">
+          <text class="text-muted">你已经投过票了</text>
+        </view>
+        <view wx:else class="vote-buttons">
+          <button class="vote-btn vote-btn-value" bindtap="onVote" data-type="value">
+            值 {{post.valueCount || 0}}
+          </button>
+          <button class="vote-btn vote-btn-not" bindtap="onVote" data-type="notValue">
+            不值 {{post.notValueCount || 0}}
+          </button>
+        </view>
+      </view>
+
+      <!-- ===== Comments Section ===== -->
+      <view class="comments-section">
+        <view class="section-title">评论 ({{comments.length}})</view>
+
+        <!-- Comment list -->
+        <view wx:if="{{comments.length > 0}}" class="comment-list">
+          <view wx:for="{{comments}}" wx:key="_id" class="comment-item">
+            <view class="comment-avatar {{!item.avatarUrl || item.avatarUrl === '匿' ? 'avatar-anon' : ''}}">
+              <text>{{item.avatarUrl || '匿'}}</text>
+            </view>
+            <view class="comment-body">
+              <view class="comment-meta">
+                <text class="comment-nickname">{{item.nickName || '匿名'}}</text>
+                <text class="comment-time text-muted">{{item.createdAtText}}</text>
+              </view>
+              <view class="comment-content">{{item.content}}</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- No comments -->
+        <view wx:else class="no-comments text-muted">
+          <text>暂无评论，来抢沙发吧</text>
+        </view>
+      </view>
+
+      <!-- Bottom spacer for fixed input -->
+      <view class="comment-spacer"></view>
+
+    </scroll-view>
+
+    <!-- ===== Fixed Bottom Comment Input ===== -->
+    <view class="comment-input-bar">
+      <input
+        class="comment-input comment-input-full"
+        placeholder="写下你的评论..."
+        value="{{commentText}}"
+        bindinput="onCommentInput"
+        confirm-type="send"
+        bindconfirm="onSendComment"
+        maxlength="300"
+      />
+    </view>
+  </block>
+</view>
+
+<!-- Initial loading -->
+<view wx:if="{{loading}}" class="loading-state">
+  <text class="text-muted">加载中...</text>
+</view>

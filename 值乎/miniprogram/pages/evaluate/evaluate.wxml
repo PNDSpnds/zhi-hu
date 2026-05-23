@@ -1,0 +1,166 @@
+<view class="page-container evaluate-page">
+  <!-- ====== Step 0: 输入物品名称 ====== -->
+  <view wx:if="{{step === 0}}" class="step-section">
+    <view class="step-header">
+      <view class="step-badge">Step 0</view>
+      <text class="step-title">你想评测什么？</text>
+    </view>
+    <view class="step-desc">输入你要买的东西，让我们帮你判断值不值得下手</view>
+    <view class="name-input-card card">
+      <input
+        class="name-input"
+        placeholder="例如：AirPods Pro、机械键盘、那件大衣..."
+        placeholder-class="input-placeholder"
+        value="{{itemName}}"
+        bindinput="onNameInput"
+        maxlength="30"
+        confirm-type="done"
+      />
+    </view>
+    <view class="step-actions">
+      <button class="btn-primary next-btn {{itemName ? '' : 'btn-disabled'}}" bindtap="onNextFromName">
+        下一步
+      </button>
+    </view>
+  </view>
+
+  <!-- ====== Step 1: 选择评测风格 ====== -->
+  <view wx:if="{{step === 1}}" class="step-section">
+    <view class="step-header">
+      <view class="step-badge">Step 1</view>
+      <text class="step-title">你的消费哲学是？</text>
+    </view>
+    <view class="step-desc">选择最贴合你消费习惯的风格</view>
+
+    <view class="preset-list">
+      <view
+        wx:for="{{presets}}"
+        wx:key="key"
+        class="preset-card card flex-row {{selectedPreset === item.key ? 'preset-selected' : ''}}"
+        data-key="{{item.key}}"
+        bindtap="onSelectPreset"
+      >
+        <view class="preset-icon">{{item.icon}}</view>
+        <view class="preset-info flex-col">
+          <text class="preset-name text-bold">{{item.name}}</text>
+          <text class="preset-desc text-muted text-small">{{item.desc}}</text>
+        </view>
+        <view class="preset-radio {{selectedPreset === item.key ? 'radio-checked' : ''}}">
+          <view wx:if="{{selectedPreset === item.key}}" class="radio-dot"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="step-actions">
+      <button class="btn-primary next-btn {{selectedPreset ? '' : 'btn-disabled'}}" bindtap="onNextFromPreset">
+        开始评测
+      </button>
+    </view>
+  </view>
+
+  <!-- ====== Step 2: 答题 ====== -->
+  <view wx:if="{{step === 2}}" class="step-section">
+    <!-- 进度条 -->
+    <view class="progress-wrap">
+      <view class="progress-bar-bg">
+        <view class="progress-bar-fill" style="width: {{(questionIndex + 1) / totalQuestions * 100}}%;"></view>
+      </view>
+      <text class="progress-text text-muted text-small">{{questionIndex + 1}} / {{totalQuestions}}</text>
+    </view>
+
+    <view class="eval-subtitle text-center text-muted text-small" wx:if="{{itemName}}">
+      正在评测：<text class="text-bold color-value">{{itemName}}</text>
+    </view>
+
+    <!-- 当前问题卡片 -->
+    <view class="question-card card">
+      <view class="question-label text-bold">{{currentQuestion.label}}</view>
+
+      <!-- 数字输入 -->
+      <view wx:if="{{currentQuestion.type === 'number'}}" class="input-group">
+        <view class="number-input-wrap flex-row">
+          <text class="number-prefix">¥</text>
+          <input
+            class="number-input"
+            type="digit"
+            placeholder="{{currentQuestion.placeholder}}"
+            placeholder-class="input-placeholder"
+            value="{{numberValue}}"
+            bindinput="onNumberInput"
+            confirm-type="next"
+          />
+        </view>
+      </view>
+
+      <!-- 滑块 -->
+      <view wx:if="{{currentQuestion.type === 'slider'}}" class="input-group slider-group">
+        <view class="slider-labels flex-between">
+          <text class="text-muted text-small">{{sliderMin}} 分</text>
+          <text class="slider-value">{{sliderValue}} 分</text>
+          <text class="text-muted text-small">{{sliderMax}} 分</text>
+        </view>
+        <slider
+          min="{{sliderMin}}"
+          max="{{sliderMax}}"
+          value="{{sliderValue}}"
+          activeColor="#4A90D9"
+          backgroundColor="#E5E5E5"
+          block-size="24"
+          bindchange="onSliderChange"
+          show-value="{{false}}"
+        />
+      </view>
+
+      <!-- 星级评分 -->
+      <view wx:if="{{currentQuestion.type === 'stars'}}" class="input-group stars-group">
+        <view class="stars-row flex-center">
+          <view
+            wx:for="{{[1,2,3,4,5]}}"
+            wx:key="*this"
+            class="star-item"
+            data-value="{{item}}"
+            bindtap="onStarTap"
+          >
+            <text class="star-icon {{item <= starValue ? 'star-active' : ''}}">
+              {{item <= starValue ? '★' : '☆'}}
+            </text>
+          </view>
+        </view>
+        <view class="text-center text-muted text-small mt-10">
+          {{starValue === 0 ? '点击星星评分' : starValue + ' 星'}}
+        </view>
+      </view>
+
+      <!-- 选择题（radio 样式） -->
+      <view wx:if="{{currentQuestion.type === 'radio'}}" class="input-group radio-group">
+        <view
+          wx:for="{{radioOptions}}"
+          wx:key="*this"
+          class="radio-item {{radioValue === index ? 'radio-item-active' : ''}}"
+          data-index="{{index}}"
+          bindtap="onRadioTap"
+        >
+          <view class="radio-circle {{radioValue === index ? 'radio-checked' : ''}}">
+            <view wx:if="{{radioValue === index}}" class="radio-dot"></view>
+          </view>
+          <text class="radio-label">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 导航按钮 -->
+    <view class="step-actions flex-between">
+      <button
+        wx:if="{{questionIndex > 0}}"
+        class="btn-ghost prev-btn"
+        bindtap="onPrevQuestion"
+      >
+        上一题
+      </button>
+      <view wx:else></view>
+      <button class="btn-primary next-btn" bindtap="onNextQuestion">
+        {{questionIndex === totalQuestions - 1 ? (mode === 'base' ? '查看结果' : '完成评测') : '下一题'}}
+      </button>
+    </view>
+  </view>
+</view>

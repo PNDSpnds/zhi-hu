@@ -1,0 +1,193 @@
+/* pages/post/post.wxss — Create Post */
+
+page {
+  background-color: #F5F5F5;
+  padding-bottom: 60rpx;
+}
+
+.post-container {
+  padding: 24rpx;
+}
+
+/* ===== Section ===== */
+.section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #F0F0F0;
+}
+
+/* ===== Preview Card ===== */
+.preview-card {
+  padding: 10rpx 0;
+}
+
+.no-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+}
+
+.go-evaluate {
+  margin-top: 16rpx;
+  color: #4A90D9;
+  font-size: 28rpx;
+}
+
+/* ===== Form ===== */
+.form-item {
+  margin-bottom: 28rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  background-color: #F8F8F8;
+  border-radius: 10rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 160rpx;
+  background-color: #F8F8F8;
+  border-radius: 10rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.char-count {
+  font-size: 22rpx;
+  text-align: right;
+  margin-top: 6rpx;
+}
+
+/* ===== Image Upload ===== */
+.image-upload-area {
+  margin-top: 8rpx;
+}
+
+.image-upload-btn {
+  width: 180rpx;
+  height: 180rpx;
+  background-color: #F8F8F8;
+  border: 2rpx dashed #CCCCCC;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-icon {
+  font-size: 60rpx;
+  color: #CCCCCC;
+  line-height: 1;
+}
+
+.upload-text {
+  font-size: 22rpx;
+  color: #999999;
+  margin-top: 6rpx;
+}
+
+.image-preview-wrap {
+  position: relative;
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.image-preview {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+}
+
+.image-remove {
+  position: absolute;
+  top: -12rpx;
+  right: -12rpx;
+  width: 44rpx;
+  height: 44rpx;
+  background-color: #E8636C;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.uploading-indicator {
+  padding: 40rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+/* ===== Anonymous Toggle ===== */
+.anonymous-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.anonymous-hint {
+  font-size: 24rpx;
+}
+
+/* ===== Submit ===== */
+.submit-section {
+  padding: 16rpx 0;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  background-color: #4A90D9;
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.submit-btn[disabled] {
+  background-color: #CCCCCC;
+  color: #FFFFFF;
+}
+
+.submit-btn::after {
+  border: none;
+}
+
+/* ===== Utility ===== */
+.text-muted {
+  color: #999999;
+}

@@ -1,0 +1,296 @@
+<!--profile.wxml-->
+<view class="page-container">
+
+  <!-- ==================== Header Section ==================== -->
+  <view class="profile-header card">
+    <view class="header-top flex-row">
+      <!-- Avatar -->
+      <view class="avatar-wrapper" bindtap="onTapAvatar">
+        <view class="avatar-circle" style="background: {{avatarBgColor}};">
+          <text class="avatar-emoji">{{userInfo.avatarUrl || '😊'}}</text>
+        </view>
+        <view class="avatar-edit-tip text-small text-muted">点击更换</view>
+      </view>
+
+      <!-- Nickname & Stats -->
+      <view class="header-info">
+        <view class="nickname-row flex-row" bindtap="onTapNickname">
+          <text class="nickname">{{userInfo.nickName || '点击设置昵称'}}</text>
+          <text class="edit-icon">✐</text>
+        </view>
+        <view class="stats-row flex-row">
+          <view class="stat-item">
+            <view class="stat-num">{{evalCount}}</view>
+            <view class="stat-label text-small text-muted">评测记录</view>
+          </view>
+          <view class="stat-divider"></view>
+          <view class="stat-item">
+            <view class="stat-num">{{postCount}}</view>
+            <view class="stat-label text-small text-muted">我的帖子</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== First-time Setup ==================== -->
+  <view class="setup-section card" wx:if="{{isNewUser}}">
+    <view class="setup-title">欢迎来到值乎</view>
+    <view class="setup-desc text-muted">设置你的虚拟形象，开始评测吧</view>
+
+    <!-- Avatar picker inline for setup -->
+    <view class="setup-label">选择头像</view>
+    <view class="avatar-mini-grid">
+      <view
+        wx:for="{{avatarList.slice(0, 16)}}"
+        wx:key="*this"
+        class="avatar-mini-item {{tempAvatar === item ? 'avatar-mini-selected' : ''}}"
+        bindtap="onSetupPickAvatar"
+        data-emoji="{{item}}"
+      >
+        <text>{{item}}</text>
+      </view>
+    </view>
+
+    <!-- Nickname input for setup -->
+    <view class="setup-label">昵称</view>
+    <input
+      class="setup-input"
+      value="{{tempNickname}}"
+      placeholder="输入你的昵称"
+      maxlength="12"
+      bindinput="onSetupNicknameInput"
+    />
+
+    <view class="setup-actions">
+      <view class="btn-primary setup-btn" bindtap="onSaveProfile">
+        完成
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== Weight Preset Section ==================== -->
+  <view class="section card" wx:if="{{!isNewUser}}">
+    <view class="section-title">权重方案</view>
+    <view class="preset-row flex-between" bindtap="onTapPreset">
+      <view class="flex-row">
+        <view class="preset-icon">{{currentPreset.icon}}</view>
+        <view class="preset-info">
+          <view class="preset-name">{{currentPreset.name}}</view>
+          <view class="preset-desc text-small text-muted">{{currentPreset.desc}}</view>
+        </view>
+      </view>
+      <text class="arrow text-muted">›</text>
+    </view>
+  </view>
+
+  <!-- ==================== Custom Weight Tuning ==================== -->
+  <view class="section card" wx:if="{{!isNewUser}}">
+    <view class="setting-row flex-between" bindtap="onToggleWeightSliders">
+      <view class="flex-row">
+        <text class="setting-icon">⚙</text>
+        <text>自定义权重</text>
+      </view>
+      <text class="arrow text-muted">{{showWeightSliders ? '‹' : '›'}}</text>
+    </view>
+
+    <!-- Expandable slider list -->
+    <view class="weight-sliders" wx:if="{{showWeightSliders}}">
+      <view class="sliders-hint text-small text-muted">
+        拖动滑块调整各维度权重（0-100），保存后自动归一化
+      </view>
+      <view
+        wx:for="{{customWeightSliders}}"
+        wx:key="key"
+        class="slider-item"
+      >
+        <view class="flex-between slider-header">
+          <text class="slider-label">{{item.label}}</text>
+          <text class="slider-value">{{item.value}}</text>
+        </view>
+        <slider
+          min="0"
+          max="100"
+          step="1"
+          value="{{item.value}}"
+          activeColor="#4A90D9"
+          backgroundColor="#E8E8E8"
+          block-size="20"
+          bindchange="onWeightSliderChange"
+          data-key="{{item.key}}"
+        />
+      </view>
+      <view class="slider-actions">
+        <view class="btn-ghost slider-reset-btn" bindtap="onResetWeights">
+          恢复默认
+        </view>
+        <view class="btn-primary slider-save-btn" bindtap="onSaveCustomWeights">
+          保存权重
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== My Evaluations ==================== -->
+  <view class="section card" wx:if="{{!isNewUser}}">
+    <view class="section-header flex-between">
+      <view class="section-title">我的评测</view>
+      <text class="section-count text-small text-muted">{{evaluations.length}} 条记录</text>
+    </view>
+
+    <view wx:if="{{evaluations.length === 0}}" class="empty-state">
+      <text class="empty-icon">🔍</text>
+      <text class="empty-text text-muted">还没有评测记录</text>
+      <text class="empty-hint text-small text-muted">去评测一个商品吧</text>
+    </view>
+
+    <view wx:else>
+      <view
+        wx:for="{{evaluations}}"
+        wx:key="id"
+        class="list-item flex-between"
+        bindtap="onTapEvaluation"
+        data-index="{{index}}"
+      >
+        <view class="list-item-left">
+          <view class="list-item-title">{{item.itemName}}</view>
+          <view class="list-item-date text-small text-muted">{{item.date}}</view>
+        </view>
+        <view class="list-item-right flex-row">
+          <view class="score-badge" style="background: {{item.score >= 55 ? '#4A90D9' : '#E8636C'}};">
+            {{item.score}}
+          </view>
+          <text class="arrow text-muted">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== My Posts ==================== -->
+  <view class="section card" wx:if="{{!isNewUser}}">
+    <view class="section-header flex-between">
+      <view class="section-title">我的帖子</view>
+      <text class="section-count text-small text-muted">{{posts.length}} 条帖子</text>
+    </view>
+
+    <view wx:if="{{posts.length === 0}}" class="empty-state">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text text-muted">还没有发布帖子</text>
+      <text class="empty-hint text-small text-muted">去社区分享你的经验吧</text>
+    </view>
+
+    <view wx:else>
+      <view
+        wx:for="{{posts}}"
+        wx:key="id"
+        class="list-item flex-between"
+        bindtap="onTapPost"
+        data-index="{{index}}"
+      >
+        <view class="list-item-left">
+          <view class="list-item-title">{{item.itemName}}</view>
+          <view class="list-item-date text-small text-muted">{{item.date}}</view>
+        </view>
+        <view class="list-item-right flex-row">
+          <view class="vote-mini flex-row">
+            <text class="color-value text-bold">▲ {{item.valueCount || 0}}</text>
+            <text class="color-not-value text-bold" style="margin-left: 12rpx;">▼ {{item.notValueCount || 0}}</text>
+          </view>
+          <text class="arrow text-muted">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== Footer ==================== -->
+  <view class="footer" wx:if="{{!isNewUser}}">
+    <view class="about-row flex-between" bindtap="onTapAbout">
+      <text>关于值乎</text>
+      <text class="arrow text-muted">›</text>
+    </view>
+    <view class="version text-small text-muted">版本 1.0.0</view>
+  </view>
+
+</view>
+
+<!-- ==================== Avatar Picker Modal ==================== -->
+<view class="modal-mask" wx:if="{{showAvatarPicker}}" bindtap="onCloseAvatarPicker">
+  <view class="modal-content" catchtap="">
+    <view class="modal-title">选择头像</view>
+    <view class="avatar-grid">
+      <view
+        wx:for="{{avatarList}}"
+        wx:key="*this"
+        class="avatar-grid-item {{userInfo.avatarUrl === item ? 'avatar-grid-selected' : ''}}"
+        style="background: {{avatarBgColors[index % avatarBgColors.length]}};"
+        bindtap="onPickAvatar"
+        data-emoji="{{item}}"
+      >
+        <text class="avatar-grid-emoji">{{item}}</text>
+      </view>
+    </view>
+    <view class="modal-actions">
+      <view class="btn-ghost" bindtap="onCloseAvatarPicker">取消</view>
+      <view class="btn-primary" bindtap="onConfirmAvatar">确认</view>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== Nickname Edit Modal ==================== -->
+<view class="modal-mask" wx:if="{{showNicknameEdit}}" bindtap="onCloseNicknameEdit">
+  <view class="modal-content modal-small" catchtap="">
+    <view class="modal-title">修改昵称</view>
+    <input
+      class="nickname-input"
+      value="{{nicknameInput}}"
+      placeholder="输入新昵称"
+      maxlength="12"
+      bindinput="onNicknameInput"
+      focus="{{showNicknameEdit}}"
+    />
+    <view class="modal-actions">
+      <view class="btn-ghost" bindtap="onCloseNicknameEdit">取消</view>
+      <view class="btn-primary" bindtap="onConfirmNickname">确认</view>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== Weight Preset Picker Modal ==================== -->
+<view class="modal-mask" wx:if="{{showPresetPicker}}" bindtap="onClosePresetPicker">
+  <view class="modal-content" catchtap="">
+    <view class="modal-title">选择权重方案</view>
+    <view
+      wx:for="{{presetList}}"
+      wx:key="key"
+      class="preset-option flex-row {{currentPresetKey === item.key ? 'preset-option-active' : ''}}"
+      bindtap="onSelectPreset"
+      data-key="{{item.key}}"
+    >
+      <text class="preset-option-icon">{{item.icon}}</text>
+      <view class="preset-option-info">
+        <view class="preset-option-name">{{item.name}}</view>
+        <view class="preset-option-desc text-small text-muted">{{item.desc}}</view>
+      </view>
+      <text class="preset-check" wx:if="{{currentPresetKey === item.key}}">✓</text>
+    </view>
+    <view class="modal-actions">
+      <view class="btn-ghost" bindtap="onClosePresetPicker">取消</view>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== About Modal ==================== -->
+<view class="modal-mask" wx:if="{{showAbout}}" bindtap="onCloseAbout">
+  <view class="modal-content modal-small" catchtap="">
+    <view class="modal-title">关于值乎</view>
+    <view class="about-content">
+      <view class="about-app-name">值乎</view>
+      <view class="about-desc text-muted">「这东西到底值不值得买？」</view>
+      <view class="about-desc text-muted">一个帮你理性消费的决策助手</view>
+      <view class="about-version text-small text-muted mt-20">版本 1.0.0</view>
+    </view>
+    <view class="modal-actions">
+      <view class="btn-primary" bindtap="onCloseAbout">知道了</view>
+    </view>
+  </view>
+</view>

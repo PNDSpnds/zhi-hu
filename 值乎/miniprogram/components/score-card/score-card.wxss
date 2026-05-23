@@ -1,0 +1,99 @@
+.score-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+}
+
+.score-card.compact {
+  padding: 16rpx 20rpx;
+}
+
+/* 分数大字 */
+.score-main {
+  margin-bottom: 10rpx;
+}
+
+.score-number {
+  font-size: 100rpx;
+  font-weight: 800;
+  color: #4A90D9;
+  line-height: 1;
+}
+
+.compact .score-number {
+  font-size: 60rpx;
+}
+
+.score-unit {
+  font-size: 28rpx;
+  color: #999;
+  margin-left: 4rpx;
+}
+
+.compact .score-unit {
+  font-size: 22rpx;
+}
+
+/* 结论 */
+.score-conclusion {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 24rpx;
+}
+
+.compact .score-conclusion {
+  font-size: 24rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 维度列表 */
+.dimension-list {
+  margin-top: 24rpx;
+  text-align: left;
+}
+
+.dimension-item {
+  margin-bottom: 16rpx;
+}
+
+.dim-header {
+  margin-bottom: 6rpx;
+}
+
+.dim-label {
+  font-size: 26rpx;
+  color: #555;
+}
+
+.dim-score {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.dim-score.good {
+  color: #4A90D9;
+}
+
+.dim-score.bad {
+  color: #E8636C;
+}
+
+.dim-bar {
+  height: 8rpx;
+  background: #F0F0F0;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.dim-bar-fill {
+  height: 100%;
+  border-radius: 4rpx;
+  transition: width 0.5s ease;
+}
+
+/* 物品名称 */
+.score-item-name {
+  margin-top: 16rpx;
+}

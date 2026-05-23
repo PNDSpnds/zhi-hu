@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "score-card": "../../components/score-card/score-card",
+    "vote-bar": "../../components/vote-bar/vote-bar"
+  },
+  "navigationBarTitleText": "帖子详情"
+}

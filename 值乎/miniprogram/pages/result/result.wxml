@@ -1,0 +1,58 @@
+<view class="page-container result-page">
+  <!-- 分数卡片组件 -->
+  <view class="result-card-section">
+    <score-card
+      score="{{score}}"
+      conclusion="{{conclusion}}"
+      dimensionScores="{{dimensionScores}}"
+      itemName="{{itemName}}"
+      compact="{{false}}"
+    />
+  </view>
+
+  <!-- 仅基础评测时：引导深入评测 -->
+  <view wx:if="{{mode === 'base'}}" class="extended-cta card">
+    <view class="cta-icon">🔍</view>
+    <view class="cta-text">
+      <text class="cta-title text-bold">以上只是基础判断</text>
+      <text class="cta-desc text-muted text-small">回答更多问题，从多维度揭示隐藏风险，让评测更准</text>
+    </view>
+    <button class="btn-primary cta-btn" bindtap="onExtendedEvaluate">
+      深入评测，看看隐藏风险
+    </button>
+  </view>
+
+  <!-- 完整结果：维度建议 -->
+  <view wx:if="{{mode === 'full' && advices.length > 0}}" class="advice-section">
+    <view class="section-title text-bold">评测分析</view>
+    <view
+      wx:for="{{advices}}"
+      wx:key="dim"
+      class="advice-item card flex-row {{item.type === 'good' ? 'advice-good' : 'advice-bad'}}"
+    >
+      <view class="advice-dot {{item.type === 'good' ? 'dot-good' : 'dot-bad'}}"></view>
+      <view class="advice-content flex-col">
+        <text class="advice-dim text-bold">{{item.dim}}</text>
+        <text class="advice-text text-muted text-small">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="result-actions flex-col">
+    <button class="btn-primary action-btn" bindtap="onGoToPost">
+      发到社区让大家评判
+    </button>
+    <button class="btn-share action-btn" open-type="share">
+      分享给朋友
+    </button>
+    <button class="btn-ghost action-btn" bindtap="onRetry">
+      再测一次
+    </button>
+  </view>
+
+  <!-- 趣味小贴士 -->
+  <view class="result-tip text-center">
+    <text class="text-muted text-small">「值乎」—— 帮你理性消费，避免冲动下单</text>
+  </view>
+</view>

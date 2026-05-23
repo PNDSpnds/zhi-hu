@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "score-card": "../../components/score-card/score-card"
+  },
+  "navigationBarTitleText": "评测结果"
+}

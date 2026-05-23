@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "score-card": "../../components/score-card/score-card"
+  },
+  "navigationBarTitleText": "发布到社区"
+}

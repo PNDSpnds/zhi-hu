@@ -1,0 +1,36 @@
+<view class="score-card {{compact ? 'compact' : ''}}">
+  <!-- 分数大字 -->
+  <view class="score-main">
+    <text class="score-number">{{score}}</text>
+    <text class="score-unit">/100</text>
+  </view>
+
+  <!-- 环形进度条 -->
+  <view class="score-ring">
+    <view class="ring-bg"></view>
+    <view class="ring-fill" style="--score: {{score}};"></view>
+  </view>
+
+  <!-- 结论 -->
+  <view class="score-conclusion">{{conclusion}}</view>
+
+  <!-- 非紧凑模式：各维度拆条 -->
+  <view wx:if="{{!compact && dimensionScores}}" class="dimension-list">
+    <view wx:for="{{dimensionList}}" wx:key="dim" class="dimension-item">
+      <view class="dim-header flex-between">
+        <text class="dim-label">{{item.label}}</text>
+        <text class="dim-score {{item.info.score >= 7 ? 'good' : item.info.score <= 3 ? 'bad' : ''}}">
+          {{item.info.score}}分
+        </text>
+      </view>
+      <view class="dim-bar">
+        <view class="dim-bar-fill" style="width: {{item.info.score * 10}}%; background: {{item.info.score >= 7 ? '#4A90D9' : item.info.score <= 3 ? '#E8636C' : '#CCCCCC'}};"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 物品名称 -->
+  <view wx:if="{{itemName}}" class="score-item-name text-muted text-small">
+    评测物品：{{itemName}}
+  </view>
+</view>

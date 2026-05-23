@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "score-card": "../../components/score-card/score-card",
+    "vote-bar": "../../components/vote-bar/vote-bar"
+  },
+  "navigationBarTitleText": "值乎社区",
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,107 @@
+<!-- pages/post/post.wxml — Create Post / Publish to Community -->
+<view class="post-container">
+
+  <!-- Preview of the score card -->
+  <view class="section">
+    <view class="section-title">评测预览</view>
+    <view class="preview-card">
+      <score-card
+        wx:if="{{evaluationResult}}"
+        score="{{evaluationResult.score}}"
+        conclusion="{{evaluationResult.conclusion}}"
+        item-name="{{evaluationResult.itemName}}"
+        dimension-scores="{{evaluationResult.dimensionScores}}"
+        compact="{{false}}"
+      />
+      <view wx:else class="no-result">
+        <text class="text-muted">暂无评测结果</text>
+        <navigator url="../evaluate/evaluate" open-type="navigate" class="go-evaluate">
+          去评测
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <!-- Form -->
+  <view class="section">
+    <view class="section-title">发布信息</view>
+
+    <!-- Item name -->
+    <view class="form-item">
+      <view class="form-label">物品名称</view>
+      <input
+        class="form-input"
+        placeholder="请输入物品名称"
+        value="{{itemName}}"
+        bindinput="onItemNameChange"
+        maxlength="50"
+      />
+    </view>
+
+    <!-- Description -->
+    <view class="form-item">
+      <view class="form-label">额外描述（选填）</view>
+      <textarea
+        class="form-textarea"
+        placeholder="说说你的购买纠结，或者这个物品的更多信息..."
+        value="{{description}}"
+        bindinput="onDescChange"
+        maxlength="500"
+        auto-height
+      />
+      <view class="char-count text-muted">{{description.length}}/500</view>
+    </view>
+
+    <!-- Image upload -->
+    <view class="form-item">
+      <view class="form-label">添加图片（选填）</view>
+      <view class="image-upload-area">
+        <view
+          wx:if="{{imageUrl}}"
+          class="image-preview-wrap"
+          bindtap="onPreviewImage"
+        >
+          <image class="image-preview" src="{{imageUrl}}" mode="aspectFill" />
+          <view class="image-remove" bindtap="onRemoveImage">×</view>
+        </view>
+        <view
+          wx:if="{{!imageUrl && !uploading}}"
+          class="image-upload-btn"
+          bindtap="onChooseImage"
+        >
+          <text class="upload-icon">+</text>
+          <text class="upload-text">上传图片</text>
+        </view>
+        <view wx:if="{{uploading}}" class="uploading-indicator">
+          <text>上传中...</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Anonymous toggle -->
+    <view class="form-item">
+      <view class="form-label">匿名发布</view>
+      <view class="anonymous-row">
+        <text class="text-muted anonymous-hint">开启后将以"匿名"身份发布</text>
+        <switch
+          checked="{{isAnonymous}}"
+          bindchange="onAnonymousChange"
+          color="#4A90D9"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- Submit -->
+  <view class="submit-section">
+    <button
+      class="submit-btn"
+      bindtap="onSubmit"
+      disabled="{{submitting || !itemName}}"
+      loading="{{submitting}}"
+    >
+      发布到社区
+    </button>
+  </view>
+
+</view>

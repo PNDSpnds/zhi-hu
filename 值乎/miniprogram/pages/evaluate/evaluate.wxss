@@ -1,0 +1,352 @@
+/* ====== evaluate 页样式 ====== */
+.evaluate-page {
+  min-height: 100vh;
+  padding: 30rpx 30rpx 60rpx;
+  box-sizing: border-box;
+}
+
+/* ---- 步骤区 ---- */
+.step-section {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step-header {
+  margin-bottom: 12rpx;
+}
+
+.step-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #4A90D9, #357ABD);
+  color: #FFFFFF;
+  font-size: 22rpx;
+  font-weight: 600;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.step-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.3;
+}
+
+.step-desc {
+  font-size: 26rpx;
+  color: #888;
+  margin-bottom: 36rpx;
+  line-height: 1.5;
+}
+
+/* ---- Step 0: 名称输入 ---- */
+.name-input-card {
+  padding: 32rpx 28rpx;
+  margin-bottom: 36rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.name-input {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid #EEEEEE;
+  padding-bottom: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.name-input:focus {
+  border-bottom-color: #4A90D9;
+}
+
+.input-placeholder {
+  color: #C0C0C0;
+  font-weight: 400;
+}
+
+.name-hint {
+  text-align: right;
+}
+
+/* ---- Step 1: 预设选择 ---- */
+.preset-list {
+  margin-bottom: 36rpx;
+}
+
+.preset-card {
+  padding: 28rpx 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  border: 2rpx solid transparent;
+}
+
+.preset-card:active {
+  transform: scale(0.98);
+}
+
+.preset-selected {
+  border-color: #4A90D9;
+  background: #F0F7FF;
+}
+
+.preset-icon {
+  font-size: 52rpx;
+  width: 90rpx;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.preset-info {
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.preset-name {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.preset-desc {
+  line-height: 1.4;
+}
+
+.preset-radio {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid #D0D0D0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-checked {
+  border-color: #4A90D9;
+  background: #4A90D9;
+}
+
+.radio-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+
+/* ---- Step 2: 答题区 ---- */
+
+/* 进度条 */
+.progress-wrap {
+  margin-bottom: 24rpx;
+}
+
+.progress-bar-bg {
+  height: 10rpx;
+  background: #E5E5E5;
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-bottom: 10rpx;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4A90D9, #6DB3F2);
+  border-radius: 5rpx;
+  transition: width 0.35s ease;
+}
+
+.progress-text {
+  display: block;
+  text-align: right;
+}
+
+.eval-subtitle {
+  margin-bottom: 24rpx;
+}
+
+/* 问题卡片 */
+.question-card {
+  padding: 40rpx 30rpx;
+  margin-bottom: 36rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.question-label {
+  font-size: 32rpx;
+  color: #1A1A1A;
+  line-height: 1.5;
+  margin-bottom: 32rpx;
+  display: block;
+}
+
+/* 输入组 */
+.input-group {
+  padding: 8rpx 0;
+}
+
+/* 数字输入 */
+.number-input-wrap {
+  border: 2rpx solid #EEEEEE;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  background: #FAFAFA;
+  transition: border-color 0.2s;
+}
+
+.number-input-wrap:focus-within {
+  border-color: #4A90D9;
+}
+
+.number-prefix {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #4A90D9;
+  margin-right: 12rpx;
+}
+
+.number-input {
+  flex: 1;
+  font-size: 34rpx;
+  color: #333;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+/* 滑块 */
+.slider-group {
+  padding-top: 12rpx;
+}
+
+.slider-labels {
+  margin-bottom: 8rpx;
+}
+
+.slider-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #4A90D9;
+}
+
+slider {
+  width: 100%;
+  margin: 0;
+}
+
+/* 星级 */
+.stars-group {
+  padding: 20rpx 0;
+}
+
+.stars-row {
+  gap: 16rpx;
+}
+
+.star-item {
+  padding: 10rpx;
+}
+
+.star-icon {
+  font-size: 64rpx;
+  color: #E0E0E0;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.star-active {
+  color: #F5A623;
+}
+
+.star-item:active .star-icon {
+  transform: scale(1.2);
+}
+
+/* 选择题（radio 行） */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 16rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+  transition: background 0.15s ease;
+}
+
+.radio-item:last-child {
+  border-bottom: none;
+}
+
+.radio-item:active {
+  background: #F7F9FC;
+}
+
+.radio-item-active {
+  background: #F0F7FF;
+}
+
+.radio-circle {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #D0D0D0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.radio-checked {
+  border-color: #4A90D9;
+  background: #4A90D9;
+}
+
+.radio-dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+
+.radio-label {
+  font-size: 30rpx;
+  color: #333;
+  flex: 1;
+}
+
+/* 按钮区 */
+.step-actions {
+  margin-top: 16rpx;
+}
+
+.next-btn {
+  min-width: 280rpx;
+  border-radius: 44rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.prev-btn {
+  min-width: 160rpx;
+  padding: 22rpx 40rpx;
+  font-size: 28rpx;
+}
+
+.btn-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}

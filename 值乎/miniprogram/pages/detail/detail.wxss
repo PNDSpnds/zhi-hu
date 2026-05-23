@@ -1,0 +1,370 @@
+/* pages/detail/detail.wxss — Post Detail */
+
+page {
+  background-color: #F5F5F5;
+  height: 100vh;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ===== Scroll Area ===== */
+.detail-scroll {
+  flex: 1;
+  padding: 0 24rpx;
+  height: 0; /* flex trick for scroll-view to fill remaining space */
+  box-sizing: border-box;
+}
+
+/* ===== Post Header ===== */
+.post-header {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0 20rpx;
+}
+
+.post-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #E8F0FE;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+.post-avatar.avatar-anon {
+  background-color: #E0E0E0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.post-author-info {
+  flex: 1;
+  margin-left: 18rpx;
+}
+
+.post-nickname {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.post-nickname.anonymous {
+  color: #999999;
+  font-style: italic;
+}
+
+.post-time {
+  font-size: 22rpx;
+  margin-top: 4rpx;
+}
+
+.share-post-btn {
+  margin-left: auto;
+  padding: 10rpx 22rpx;
+  background: linear-gradient(135deg, #4A90D9, #6DB3F2);
+  border-radius: 28rpx;
+  font-size: 22rpx;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  border: none;
+  line-height: 1;
+}
+
+.share-post-btn::after {
+  border: none;
+}
+
+.share-post-btn:active {
+  background: linear-gradient(135deg, #3A7BC8, #5A9FD8);
+}
+
+.delete-post-btn {
+  margin-left: 12rpx;
+  padding: 10rpx 22rpx;
+  background: #E8636C;
+  border-radius: 28rpx;
+  font-size: 22rpx;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.delete-post-btn:active {
+  background: #D4525B;
+}
+
+/* Feedback badge */
+.feedback-badge {
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.feedback-badge.bought {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+}
+
+.feedback-badge.not-bought {
+  background-color: #FFF3F0;
+  color: #D84315;
+}
+
+/* ===== Score Section ===== */
+.score-section {
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Item Name ===== */
+.detail-item-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #333333;
+  padding: 8rpx 0 16rpx;
+}
+
+/* ===== Description ===== */
+.detail-desc {
+  font-size: 28rpx;
+  color: #555555;
+  line-height: 1.7;
+  padding: 0 0 20rpx;
+  word-break: break-all;
+}
+
+/* ===== Image ===== */
+.detail-image-wrap {
+  margin-bottom: 20rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.detail-image {
+  width: 100%;
+  display: block;
+}
+
+/* ===== Vote Section ===== */
+.vote-section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.vote-buttons {
+  display: flex;
+  margin-top: 24rpx;
+  gap: 20rpx;
+}
+
+.vote-btn {
+  flex: 1;
+  height: 72rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border-radius: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  line-height: 1;
+}
+
+.vote-btn::after {
+  border: none;
+}
+
+.vote-btn-value {
+  background-color: #4A90D9;
+  color: #FFFFFF;
+}
+
+.vote-btn-value:active {
+  background-color: #3A7BC8;
+}
+
+.vote-btn-not {
+  background-color: #E8636C;
+  color: #FFFFFF;
+}
+
+.vote-btn-not:active {
+  background-color: #D4525B;
+}
+
+.voted-notice {
+  margin-top: 20rpx;
+  padding: 16rpx 0;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+/* ===== Comments Section ===== */
+.comments-section {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+/* Comment item */
+.comment-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background-color: #E8F0FE;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.comment-avatar.avatar-anon {
+  background-color: #E0E0E0;
+  color: #999;
+  font-size: 22rpx;
+}
+
+.comment-body {
+  flex: 1;
+  margin-left: 16rpx;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.comment-nickname {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #666666;
+}
+
+.comment-time {
+  font-size: 20rpx;
+  margin-left: 16rpx;
+}
+
+.comment-content {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.no-comments {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 26rpx;
+}
+
+/* ===== Bottom Comment Input ===== */
+.comment-spacer {
+  height: 110rpx;
+}
+
+.comment-input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #EEEEEE;
+  z-index: 100;
+}
+
+.comment-input {
+  flex: 1;
+  height: 68rpx;
+  background-color: #F5F5F5;
+  border-radius: 34rpx;
+  padding: 0 28rpx;
+  font-size: 26rpx;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.comment-input-full {
+  flex: 1;
+  width: 100%;
+}
+
+.send-btn {
+  width: 120rpx;
+  height: 68rpx;
+  margin-left: 16rpx;
+  background-color: #4A90D9;
+  color: #FFFFFF;
+  font-size: 26rpx;
+  border-radius: 34rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.send-btn::after {
+  border: none;
+}
+
+.send-btn[disabled] {
+  background-color: #CCCCCC;
+  color: #FFFFFF;
+}
+
+/* ===== States ===== */
+.empty-state, .loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 300rpx;
+  font-size: 28rpx;
+}
+
+/* ===== Utility ===== */
+.text-muted {
+  color: #999999;
+}

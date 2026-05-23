@@ -1,0 +1,94 @@
+<!-- pages/index/index.wxml — Community Feed -->
+<view class="feed-container">
+
+  <!-- Empty state -->
+  <view wx:if="{{posts.length === 0 && !loading}}" class="empty-state">
+    <view class="empty-icon-text">📋</view>
+    <text class="empty-text">还没有人发布评测</text>
+    <text class="empty-sub">快去评测你的第一件商品吧</text>
+  </view>
+
+  <!-- Two-column waterfall grid -->
+  <view class="waterfall" wx:if="{{posts.length > 0}}">
+    <view class="waterfall-column">
+      <block wx:for="{{leftPosts}}" wx:key="_id">
+        <view class="feed-card" bindtap="onCardTap" data-id="{{item._id}}">
+
+          <!-- Score card (compact) -->
+          <score-card
+            score="{{item.score}}"
+            conclusion="{{item.conclusion}}"
+            item-name="{{item.itemName}}"
+            dimension-scores="{{item.dimensionScores}}"
+            compact="{{true}}"
+          />
+
+          <!-- Item name -->
+          <view class="card-item-name">{{item.itemName}}</view>
+
+          <!-- Vote bar -->
+          <vote-bar
+            value-count="{{item.valueCount}}"
+            not-value-count="{{item.notValueCount}}"
+          />
+
+          <!-- Author row -->
+          <view class="card-author">
+            <view class="card-avatar {{item.isAnonymous ? 'avatar-anon' : ''}}">
+              <text>{{item.isAnonymous ? '匿' : item.avatarUrl}}</text>
+            </view>
+            <text class="card-nickname {{item.isAnonymous ? 'anonymous' : ''}}">
+              {{item.isAnonymous ? '匿名' : item.nickName}}
+            </text>
+          </view>
+
+        </view>
+      </block>
+    </view>
+
+    <view class="waterfall-column">
+      <block wx:for="{{rightPosts}}" wx:key="_id">
+        <view class="feed-card" bindtap="onCardTap" data-id="{{item._id}}">
+
+          <!-- Score card (compact) -->
+          <score-card
+            score="{{item.score}}"
+            conclusion="{{item.conclusion}}"
+            item-name="{{item.itemName}}"
+            dimension-scores="{{item.dimensionScores}}"
+            compact="{{true}}"
+          />
+
+          <!-- Item name -->
+          <view class="card-item-name">{{item.itemName}}</view>
+
+          <!-- Vote bar -->
+          <vote-bar
+            value-count="{{item.valueCount}}"
+            not-value-count="{{item.notValueCount}}"
+          />
+
+          <!-- Author row -->
+          <view class="card-author">
+            <view class="card-avatar {{item.isAnonymous ? 'avatar-anon' : ''}}">
+              <text>{{item.isAnonymous ? '匿' : item.avatarUrl}}</text>
+            </view>
+            <text class="card-nickname {{item.isAnonymous ? 'anonymous' : ''}}">
+              {{item.isAnonymous ? '匿名' : item.nickName}}
+            </text>
+          </view>
+
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- Load more indicator -->
+  <view wx:if="{{loadingMore}}" class="load-more">
+    <text>加载中...</text>
+  </view>
+  <view wx:if="{{allLoaded && posts.length > 0}}" class="load-more">
+    <text class="text-muted">— 没有更多了 —</text>
+  </view>
+
+</view>

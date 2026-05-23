@@ -1,0 +1,45 @@
+.vote-bar {
+  width: 100%;
+}
+
+.bar-track {
+  display: flex;
+  height: 40rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background: #F0F0F0;
+}
+
+.bar-value {
+  background: #4A90D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+.bar-not-value {
+  background: #E8636C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+.bar-label {
+  color: #FFFFFF;
+  font-size: 22rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bar-empty {
+  text-align: center;
+  padding: 16rpx 0;
+}
+
+.bar-info {
+  padding: 0 4rpx;
+}
